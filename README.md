@@ -675,7 +675,3 @@ For questions, issues, or suggestions:
 - Documentation: See README sections above
 
 ---
-
-⭐ If you found this project helpful, please consider giving it a star!
-
-**Built with ❤️ using Flask, Streamlit, and Google Gemini AI**
