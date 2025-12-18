@@ -1,4 +1,6 @@
 # 📚 RAG Document Search & Summarization System
+This README serves as both the technical documentation and detailed report 
+as required by the interview assignment.
 
 A production-ready **Retrieval-Augmented Generation (RAG)** system that enables intelligent document search and AI-powered summarization using Google Gemini AI, with comprehensive evaluation metrics.
 
