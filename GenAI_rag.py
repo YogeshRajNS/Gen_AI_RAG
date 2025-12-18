@@ -1,15 +1,10 @@
 import os
 import json
 import re
-import fitz
 import numpy as np
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-
-from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
-import chromadb
 import google.generativeai as genai
 
 # ---------------- CONFIG ----------------
@@ -115,9 +110,12 @@ def evaluate_search_relevance(retrieved_docs, expected_doc_content):
 
 class SearchEngine:
     def __init__(self):
-        self.embedder = SentenceTransformer("all-MiniLM-L6-v2")
+        from sentence_transformers import SentenceTransformer
+        import chromadb
 
+        self.embedder = SentenceTransformer("all-MiniLM-L6-v2")
         self.client = chromadb.PersistentClient(path="./chroma_store")
+
         self.collection = self.client.get_or_create_collection("docs")
 
         self.tfidf = TfidfVectorizer(stop_words="english")
@@ -126,6 +124,7 @@ class SearchEngine:
 
     def ingest_pdf(self, path, name):
         """Ingest PDF, chunk it, and store in vector database"""
+        import fitz
         pdf = fitz.open(path)
         texts = []
 
@@ -226,6 +225,7 @@ def upload():
         path = os.path.join(UPLOAD_DIR, file.filename)
         file.save(path)
 
+        engine = get_engine()
         engine.ingest_pdf(path, file.filename)
         os.remove(path)
 
@@ -245,6 +245,7 @@ def search():
         if not data or 'query' not in data:
             return jsonify({"error": "Query parameter required"}), 400
         
+        engine = get_engine()
         results = engine.search(data["query"], data.get("top_k", 5))
         return jsonify({
             "status": "success",
@@ -264,7 +265,9 @@ def summarize_api():
             return jsonify({"error": "Query parameter required"}), 400
         
         # Search for relevant documents
+        engine = get_engine()
         docs = engine.search(data["query"])
+
         
         if not docs:
             return jsonify({
@@ -305,7 +308,9 @@ def evaluate():
             return jsonify({"error": "Query parameter required"}), 400
         
         # Perform search
+        engine = get_engine()
         retrieved_docs = engine.search(data["query"])
+
         
         # Generate summary
         combined = "\n\n".join(retrieved_docs)
@@ -378,7 +383,9 @@ def run_test_suite():
             reference_summary = test_case.get('reference_summary', '')
             
             # Search
+            engine = get_engine()
             retrieved_docs = engine.search(query)
+
             
             # Summarize
             combined = "\n\n".join(retrieved_docs)
@@ -422,4 +429,5 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8000))
 
     app.run(host="0.0.0.0", port=port, debug=False)
+
 
