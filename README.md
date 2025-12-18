@@ -637,10 +637,6 @@ cat api.json
 python -c "import json; print(json.load(open('api.json')))"
 ```
 
-## 📝 License
-
-This project is licensed under the MIT License.
-
 ## 👤 Author
 
 **Yogesh Raj NS** - [@YogeshRajNS](https://github.com/YogeshRajNS)
