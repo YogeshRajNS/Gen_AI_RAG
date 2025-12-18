@@ -4,7 +4,7 @@ flask-cors==4.0.0
 streamlit==1.29.0
 
 # Document Processing
-PyMuPDF==1.23.8
+PyMuPDF==1.23.7
 
 # Machine Learning & NLP
 sentence-transformers==2.2.2
