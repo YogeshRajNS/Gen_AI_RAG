@@ -1,25 +1,25 @@
 # Core Web Frameworks
-flask==3.0.0
-flask-cors==4.0.0
-streamlit==1.29.0
+flask
+flask-cors
+streamlit
 
 # Document Processing
-PyMuPDF==1.23.7
+PyMuPDF
 
 # Machine Learning & NLP
-sentence-transformers==2.2.2
-scikit-learn==1.3.2
-numpy==1.24.3
+sentence-transformers
+scikit-learn
+numpy
 
 # Vector Database
-chromadb==0.4.18
+chromadb
 
 # Google Gemini AI
-google-generativeai==0.3.1
+google-generativeai
 
 # Evaluation Metrics
-rouge-score==0.1.2
-nltk==3.8.1
+rouge-score
+nltk
 
 # API Requests (for frontend)
 requests==2.31.0
