@@ -26,3 +26,4 @@ requests
 
 # Additional utilities
 python-dotenv
+gunicorn
